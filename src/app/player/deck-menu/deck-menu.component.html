@@ -3,7 +3,7 @@
 
 <ul>
   <li *ngFor="let deck of decks | async">
-    <a [routerLink]="deck.id">{{ deck.name }}</a>
+    <a [routerLink]="deck.id" [class.disabled]="!(online | async) && !deck.cached">{{ deck.name }}</a>
   </li>
 </ul>
 <span>

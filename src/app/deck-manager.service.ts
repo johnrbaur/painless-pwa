@@ -41,6 +41,7 @@ export interface Deck {
   solutionTemplate?: string;
   stylesheetUrl?: string;
   cards: Card[];
+  cached?: boolean;
 }
 
 const templateUrlPropNames = ['problemTemplateUrl', 'solutionTemplateUrl'] as const;
@@ -138,6 +139,35 @@ export class DeckManagerService {
   }
 
   loadAllDecks(): Observable<Deck[]> {
-    return this.http.get<Deck[]>(baseApiUrl + '/decks');
+    return forkJoin([
+      this.http.get<Deck[]>(baseApiUrl + '/decks'),
+      cachedRequests(),
+    ]).pipe(
+      map(([decks, requests]) => decks.map(deck => {
+        if (requests.find(req => req.url.includes(`decks/${deck.id}`))) {
+          deck.cached = true;
+        }
+        console.log(deck);
+        return deck;
+      }))
+    );
   }
+}
+
+async function cachedRequests(): Promise<Request[]> {
+  // Get a list of all of the caches for this origin
+  const cacheNames = await caches.keys();
+  const result = [];
+
+  for (const name of cacheNames) {
+    // Open the cache
+    const cache = await caches.open(name);
+
+    // Get a list of entries. Each item is a Request object
+    for (const request of await cache.keys()) {
+      result.push(request);
+    }
+  }
+
+  return result;
 }
