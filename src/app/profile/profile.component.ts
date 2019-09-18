@@ -16,12 +16,9 @@ export class ProfileComponent implements OnDestroy {
   user: User | undefined;
   userSubscription: Subscription;
   isOnline = this.updateService.online;
+  file: File | null = null;
 
-
-  constructor(
-    private profileService: ProfileService,
-    private updateService: UpdateService,
-  ) {
+  constructor(private profileService: ProfileService, private updateService: UpdateService) {
     this.profileForm = new FormGroup({
       firstName: new FormControl(''),
       lastName: new FormControl('')
@@ -31,7 +28,7 @@ export class ProfileComponent implements OnDestroy {
       .pipe(
         filter(user => !!user),
         map(user => user as User),
-        tap(user => this.user = user),
+        tap(user => (this.user = user))
       )
       .subscribe(user => {
         this.profileForm.setValue({
@@ -39,13 +36,14 @@ export class ProfileComponent implements OnDestroy {
           lastName: user.lastName || null
         });
       });
+  }
 
+  selectFile(fileEvent: any) {
+    this.file = fileEvent && fileEvent.target && fileEvent.target.files[0];
   }
 
   save() {
-    this.profileService.updateProfile(
-      { ...this.user, ...this.profileForm.value },
-    );
+    this.profileService.updateProfile({ ...this.user, ...this.profileForm.value }, this.file);
   }
 
   ngOnDestroy() {
