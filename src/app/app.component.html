@@ -14,4 +14,10 @@
   <router-outlet></router-outlet>
 </main>
 
-<footer></footer>
+<footer>
+  <ng-container *ngIf="updateAvailable">
+    A new version is available. Reload to update.
+    <button (click)="activateUpdate()">Reload</button>
+    <button (click)="clearUpdateMessage()">Not now</button>
+  </ng-container>
+</footer>
