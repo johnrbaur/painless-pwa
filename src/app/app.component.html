@@ -6,6 +6,7 @@
     <a routerLink="/profile">
       <img [src]="u.avatar" />
     </a>
+    <div class="dot" [ngClass]="(online | async) ? 'green' : 'red'"></div>
   </div>
 </header>
 
