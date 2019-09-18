@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 
 import { DeckManagerService, Deck } from '../../deck-manager.service';
 import { NotificationsService } from '../../notifications.service';
+import { UpdateService } from '../../update.service';
 
 @Component({
   selector: 'fc-deck-menu',
@@ -11,10 +12,12 @@ import { NotificationsService } from '../../notifications.service';
 })
 export class DeckMenuComponent {
   decks: Observable<Deck[]>;
+  online = this.update.online;
 
   constructor(
     loader: DeckManagerService,
-    private notifications: NotificationsService
+    private notifications: NotificationsService,
+    private update: UpdateService,
   ) {
     this.decks = loader.loadAllDecks();
   }
