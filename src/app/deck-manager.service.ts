@@ -43,21 +43,35 @@ export interface Deck {
   cards: Card[];
 }
 
-const templateUrlPropNames = [
-  'problemTemplateUrl',
-  'solutionTemplateUrl'
-] as const;
+const templateUrlPropNames = ['problemTemplateUrl', 'solutionTemplateUrl'] as const;
 
 const isNonEmptyString = (s: any) => s && typeof s === 'string';
+
+function preloadImage(imageUrl: string): void {
+  console.log('Preloading image:', imageUrl);
+  const img = new Image();
+  img.src = imageUrl;
+}
+
+function preloadAnyImages(deck: Deck): void {
+  const imagesUrl = environment.serverUrl + '/' + deck.id + '/images';
+
+  deck.cards.forEach((card: Card) => {
+    const imageRelativeUrls: string[] = [card.problem.image, card.solution.image];
+
+    imageRelativeUrls.forEach(ru => {
+      if (ru) {
+        preloadImage(imagesUrl + '/' + ru);
+      }
+    });
+  });
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class DeckManagerService {
-  constructor(
-    private http: HttpClient,
-    private profileService: ProfileService
-  ) {}
+  constructor(private http: HttpClient, private profileService: ProfileService) {}
 
   // Load text without trying to process it as JSON.
   loadTextFile(url: string): Observable<string> {
@@ -111,6 +125,9 @@ export class DeckManagerService {
             solutionTemplate
           } as Deck)
       ),
+      // Preload any images inside the deck
+      tap(deck => preloadAnyImages(deck)),
+
       catchError(err => {
         if (err.status === 401) {
           this.profileService.logout();
