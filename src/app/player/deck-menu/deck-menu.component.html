@@ -1,0 +1,9 @@
+<h1>Welcome to Flashcards</h1>
+<h2>Select a Deck</h2>
+
+<ul>
+  <li *ngFor="let deck of decks | async">
+    <a [routerLink]="deck.id">{{ deck.name }}</a>
+  </li>
+</ul>
+<span>

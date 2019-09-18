@@ -1,0 +1,21 @@
+<form [formGroup]="profileForm" *ngIf="user">
+  <fieldset>
+    <img [src]="user.avatar" />
+
+    <div>Username: {{ user.username }}</div>
+
+    <label>
+      First Name:
+      <input formControlName="firstName" type="text" />
+    </label>
+
+    <label>
+      Last Name:
+      <input formControlName="lastName" type="text" />
+    </label>
+
+    <button (click)="save()">Save</button>
+  </fieldset>
+
+  <button (click)="logout()">Log Out</button>
+</form>

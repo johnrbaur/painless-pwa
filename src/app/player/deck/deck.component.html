@@ -1,0 +1,10 @@
+<fc-card
+  #cardElRef
+  *ngIf="deck"
+  (click)="advance()"
+  [deck]="deck"
+  [card]="deck.cards[currentCardIndex]"
+  [problemTemplate]="deck.problemTemplate"
+  [solutionTemplate]="deck.solutionTemplate"
+  [side]="currentCardSide"
+></fc-card>

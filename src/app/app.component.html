@@ -1,0 +1,16 @@
+<header>
+  <h1>
+    <a routerLink="/"> Flashcards </a>
+  </h1>
+  <div class="user-tools" *ngIf="user | async as u">
+    <a routerLink="/profile">
+      <img [src]="u.avatar" />
+    </a>
+  </div>
+</header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<footer></footer>

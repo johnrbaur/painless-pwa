@@ -1,0 +1,11 @@
+<div
+  *ngIf=" side === 'problem' "
+  class="problem-container"
+  [innerHtml]="problemHtml"
+></div>
+
+<div
+  *ngIf=" side === 'solution' "
+  class="solution-container"
+  [innerHtml]="solutionHtml"
+></div>

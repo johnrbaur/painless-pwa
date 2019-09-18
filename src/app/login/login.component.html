@@ -1,0 +1,19 @@
+<form [formGroup]="loginForm">
+  <label>
+    Username:
+    <input type="text" autocomplete="username" formControlName="username" />
+  </label>
+  <br />
+  <label>
+    Password:
+    <input
+      type="password"
+      autocomplete="current-password"
+      formControlName="password"
+    />
+  </label>
+  <br />
+  <button (click)="login()">Login</button>
+</form>
+<a routerLink="/new-user">Need an account? Click here to sign up!</a>
+<div>{{ loginMessage }}</div>

@@ -1,0 +1,14 @@
+<form [formGroup]="newUser">
+  <label>
+    Username:
+    <input type="text" formControlName="username" />
+  </label><br />
+  <label>
+    Password:
+    <input type="password" formControlName="password"/>
+  </label><br />
+  <p>Don't use a password you care about :)</p>
+  <button (click)="create()">Create Account</button>
+</form>
+<a routerLink="/login">Already have an account? Click here to sign in.</a>
+<div>{{ message }}</div>
