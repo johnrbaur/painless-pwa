@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
 
 import { ProfileService, User } from '../profile.service';
+import { UpdateService } from '../update.service';
 
 @Component({
   selector: 'fc-profile',
@@ -14,9 +15,12 @@ export class ProfileComponent implements OnDestroy {
   profileForm: FormGroup;
   user: User | undefined;
   userSubscription: Subscription;
+  isOnline = this.updateService.online;
+
 
   constructor(
     private profileService: ProfileService,
+    private updateService: UpdateService,
   ) {
     this.profileForm = new FormGroup({
       firstName: new FormControl(''),

@@ -1,5 +1,5 @@
 <form [formGroup]="profileForm" *ngIf="user">
-  <fieldset>
+  <fieldset [disabled]="!(isOnline | async)">
     <img [src]="user.avatar" />
 
     <div>Username: {{ user.username }}</div>
@@ -18,4 +18,8 @@
   </fieldset>
 
   <button (click)="logout()">Log Out</button>
+
+  <p *ngIf="!(isOnline | async)">
+    No network detected, please connect and try again
+  </p>
 </form>
