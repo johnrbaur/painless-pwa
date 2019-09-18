@@ -36,11 +36,23 @@ export class ProfileService {
     }
   }
 
-  updateProfile(basicInfo: Partial<User>) {
+  updateProfile(basicInfo: Partial<User>, file: File | null) {
+    let formData: FormData | any;
+
     let url: string;
-    url = '/update-profile';
+    if (file && file !== null) {
+      formData = new FormData();
+      formData.append('firstName', basicInfo.firstName);
+      formData.append('lastName', basicInfo.lastName);
+      formData.append('username', basicInfo.username);
+      formData.append('file', file);
+      url = '/update-profile-with-avatar';
+    } else {
+      formData = basicInfo;
+      url = '/update-profile';
+    }
     return this.http
-      .post<User>(environment.serverUrl + url, basicInfo)
+      .post<User>(environment.serverUrl + url, formData)
       .toPromise()
       .then(user => {
         localStorage.setItem('user', JSON.stringify(user));

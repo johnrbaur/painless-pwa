@@ -14,6 +14,11 @@
       <input formControlName="lastName" type="text" />
     </label>
 
+    <label>
+      Avatar:
+      <input type="file" accept="image/*" (change)="selectFile($event)" />
+    </label>
+
     <button (click)="save()">Save</button>
   </fieldset>
 
