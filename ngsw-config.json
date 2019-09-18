@@ -24,6 +24,33 @@
           "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
         ]
       }
+    }, {
+      "name": "cards",
+      "installMode": "lazy",
+      "updateMode": "lazy",
+      "resources": {
+        "urls": [
+          "**/ac-2019-speakers/**",
+          "**/platonic-solids/**",
+          "**/planets/**",
+          "**/sparrow/**",
+          "**/arithmetic/**"
+        ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "deck-list",
+      "urls": [
+        "**/api/decks"
+      ],
+      "cacheConfig": {
+        "maxSize": 100,
+        "maxAge": "1d",
+        "strategy": "freshness",
+        "timeout": "10s"
+      }
     }
   ]
 }
