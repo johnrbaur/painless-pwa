@@ -36,7 +36,7 @@ export class DeckComponent implements OnChanges, AfterViewInit {
     this.startDeck();
   }
 
-  @ViewChild('cardElRef', { read: ElementRef, static: false })
+  @ViewChild('cardElRef', { read: ElementRef })
   cardElRef?: ElementRef;
 
   setCardScale() {
